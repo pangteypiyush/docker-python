@@ -11,15 +11,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ 3.5, 3.6, 3.7, 3.8 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKER_PAT }}
 
       - uses: docker/login-action@v1
         with:
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push images
-        run: |
-          echo Conc: $(nproc)
-          make -j$(nproc) push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          build-args: |
+            PYTHON_VERSION=${{ matrix.version }}
+          tags: |
+            ${{ github.repository_owner }}/python:${{ matrix.version }}
+            ghcr.io/${{ github.repository_owner }}/python:${{ matrix.version }}
