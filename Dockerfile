@@ -14,6 +14,14 @@ RUN apk add --no-cache libressl-dev make \
   else \
     apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev ; \
   fi \
-  && pip install flake8 wheel setuptools pytz cryptography requests cython \
+  && pip install \
+      flake8 \
+      wheel \
+      setuptools \
+      pytz \
+      cryptography \
+      requests \
+      cython \
+      coverage \
   && apk del .build-deps \
   && rm -rf /root/.cache /root/.cargo
