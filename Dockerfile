@@ -23,5 +23,6 @@ RUN apk add --no-cache libressl-dev make \
       requests \
       cython \
       coverage \
+      unittest-xml-reporting \
   && apk del .build-deps \
   && rm -rf /root/.cache /root/.cargo
