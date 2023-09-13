@@ -15,12 +15,12 @@ jobs:
       matrix:
         version: [ 3.5, 3.6, 3.7, 3.8 ]
     steps:
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKER_PAT }}
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
